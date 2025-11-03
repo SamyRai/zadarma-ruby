@@ -2,6 +2,7 @@
 
 module Zadarma
   module Resources
+    # The SpeechRecognition resource allows you to manage speech recognition.
     class SpeechRecognition
       def initialize(client:)
         @client = client

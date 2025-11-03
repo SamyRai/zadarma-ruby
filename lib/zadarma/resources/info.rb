@@ -2,6 +2,7 @@
 
 module Zadarma
   module Resources
+    # The Info resource provides access to user information, such as balance and call rates.
     class Info
       def initialize(client:)
         @client = client

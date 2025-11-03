@@ -2,6 +2,7 @@
 
 module Zadarma
   module Resources
+    # The Request resource allows you to initiate callbacks.
     class Request
       def initialize(client:)
         @client = client

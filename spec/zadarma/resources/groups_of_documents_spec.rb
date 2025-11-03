@@ -8,7 +8,7 @@ RSpec.describe Zadarma::Resources::GroupsOfDocuments do
 
   describe '#files' do
     it 'retrieves the list of files in a group of documents' do
-      stub_request(:get, /api.zadarma.com\/v1\/documents\/files\//)
+      stub_request(:get, %r{api.zadarma.com/v1/documents/files/})
         .to_return(body: { status: 'success' }.to_json)
 
       response = client.document_files
@@ -18,7 +18,7 @@ RSpec.describe Zadarma::Resources::GroupsOfDocuments do
 
   describe '#list' do
     it 'retrieves the list of groups of documents' do
-      stub_request(:get, /api.zadarma.com\/v1\/documents\/groups\/list\//)
+      stub_request(:get, %r{api.zadarma.com/v1/documents/groups/list/})
         .to_return(body: { status: 'success' }.to_json)
 
       response = client.document_groups
@@ -28,7 +28,7 @@ RSpec.describe Zadarma::Resources::GroupsOfDocuments do
 
   describe '#get' do
     it 'retrieves a group of documents' do
-      stub_request(:get, /api.zadarma.com\/v1\/documents\/groups\/get\/123\//)
+      stub_request(:get, %r{api.zadarma.com/v1/documents/groups/get/123/})
         .to_return(body: { status: 'success' }.to_json)
 
       response = client.get_document_group(id: '123')
@@ -38,7 +38,7 @@ RSpec.describe Zadarma::Resources::GroupsOfDocuments do
 
   describe '#create' do
     it 'creates a new group of documents' do
-      stub_request(:post, /api.zadarma.com\/v1\/documents\/groups\/create\//)
+      stub_request(:post, %r{api.zadarma.com/v1/documents/groups/create/})
         .to_return(body: { status: 'success' }.to_json)
 
       response = client.create_document_group(params: { first_name: 'John', last_name: 'Doe' })
@@ -48,7 +48,7 @@ RSpec.describe Zadarma::Resources::GroupsOfDocuments do
 
   describe '#update' do
     it 'updates a group of documents' do
-      stub_request(:put, /api.zadarma.com\/v1\/documents\/groups\/update\/123\//)
+      stub_request(:put, %r{api.zadarma.com/v1/documents/groups/update/123/})
         .to_return(body: { status: 'success' }.to_json)
 
       response = client.update_document_group(id: '123', params: { first_name: 'Jane' })

@@ -2,6 +2,7 @@
 
 module Zadarma
   module Resources
+    # The Pbx resource allows you to manage your Zadarma PBX.
     class Pbx
       def initialize(client:)
         @client = client

@@ -2,6 +2,7 @@
 
 module Zadarma
   module Resources
+    # The GroupsOfDocuments resource allows you to manage groups of documents.
     class GroupsOfDocuments
       def initialize(client:)
         @client = client

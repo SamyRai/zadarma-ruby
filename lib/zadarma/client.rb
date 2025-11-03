@@ -16,10 +16,16 @@ require_relative 'resources/sms'
 require_relative 'resources/statistics'
 require_relative 'resources/speech_recognition'
 require_relative 'resources/groups_of_documents'
+require_relative 'client/resources'
+require_relative 'client/http'
 
 module Zadarma
+  # The Client class is the main entry point for interacting with the Zadarma API.
   class Client
-    API_URL = 'https://api.zadarma.com'.freeze
+    include Resources
+    include Http
+
+    API_URL = 'https://api.zadarma.com'
 
     def initialize(api_key:, api_secret:)
       @api_key = api_key
@@ -62,8 +68,8 @@ module Zadarma
       direct_numbers_resource.available(direction_id: direction_id, mask: mask)
     end
 
-    def order_direct_number(direction_id:, number_id: nil, documents_group_id: nil, purpose: nil, receive_sms: nil, period: nil, autorenew_period: nil)
-      direct_numbers_resource.order(direction_id: direction_id, number_id: number_id, documents_group_id: documents_group_id, purpose: purpose, receive_sms: receive_sms, period: period, autorenew_period: autorenew_period)
+    def order_direct_number(params)
+      direct_numbers_resource.order(params)
     end
 
     def prolong_direct_number(number:, months:)
@@ -106,16 +112,17 @@ module Zadarma
       sms.send_sms(number: number, message: message, sender: sender)
     end
 
-    def statistics(start:, end_date:, sip: nil, cost_only: nil, type: nil, skip: nil, limit: nil)
-      statistics_resource.statistics(start: start, end_date: end_date, sip: sip, cost_only: cost_only, type: type, skip: skip, limit: limit)
+    def statistics(params)
+      statistics_resource.statistics(params)
     end
 
-    def pbx_statistics(start:, end_date:, version: nil, skip: nil, limit: nil, call_type: nil)
-      statistics_resource.pbx_statistics(start: start, end_date: end_date, version: version, skip: skip, limit: limit, call_type: call_type)
+    def pbx_statistics(params)
+      statistics_resource.pbx_statistics(params)
     end
 
     def get_speech_recognition(call_id:, lang: nil, return_results: nil, alternatives: nil)
-      speech_recognition_resource.get(call_id: call_id, lang: lang, return_results: return_results, alternatives: alternatives)
+      speech_recognition_resource.get(call_id: call_id, lang: lang, return_results: return_results,
+                                      alternatives: alternatives)
     end
 
     def initiate_speech_recognition(call_id:, lang: nil)
@@ -156,93 +163,6 @@ module Zadarma
 
     def delete(path, params = {})
       request(:delete, path, params)
-    end
-
-    private
-
-    def info
-      Resources::Info.new(client: self)
-    end
-
-    def pbx
-      Resources::Pbx.new(client: self)
-    end
-
-    def direct_numbers_resource
-      Resources::DirectNumbers.new(client: self)
-    end
-
-    def request_resource
-      Resources::Request.new(client: self)
-    end
-
-    def sip
-      Resources::Sip.new(client: self)
-    end
-
-    def sms
-      Resources::Sms.new(client: self)
-    end
-
-    def statistics_resource
-      Resources::Statistics.new(client: self)
-    end
-
-    def speech_recognition_resource
-      Resources::SpeechRecognition.new(client: self)
-    end
-
-    def groups_of_documents_resource
-      Resources::GroupsOfDocuments.new(client: self)
-    end
-
-    def request(method, path, params)
-      raise 'No API key or secret provided' unless @api_key && @api_secret
-
-      sorted_params = Hash[params.sort]
-      query_string = to_query(sorted_params)
-      signature = generate_signature(path, query_string)
-
-      response = connection.send(method) do |req|
-        req.url path
-        req.headers['Authorization'] = "#{@api_key}:#{signature}"
-        if %i[post put].include?(method)
-          req.body = sorted_params
-        else
-          req.params = sorted_params
-        end
-      end
-
-      handle_response(response)
-    end
-
-    def connection
-      @connection ||= Faraday.new(url: API_URL) do |faraday|
-        faraday.request :url_encoded
-        faraday.adapter Faraday.default_adapter
-      end
-    end
-
-    def generate_signature(path, query_string)
-      string_to_sign = path + query_string + Digest::MD5.hexdigest(query_string)
-      hmac = OpenSSL::HMAC.hexdigest('sha1', @api_secret, string_to_sign)
-      Base64.strict_encode64(hmac)
-    end
-
-    def to_query(hash)
-      hash.map { |k, v| "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}" }.join('&')
-    end
-
-    def handle_response(response)
-      if response.success?
-        body = JSON.parse(response.body)
-        if body['status'] == 'error'
-          raise Zadarma::Error, "API Error: #{body['message']}"
-        end
-        body
-      else
-        raise Zadarma::Error, "API Error: #{response.status} - #{response.body}"
-      end
     end
   end
 end

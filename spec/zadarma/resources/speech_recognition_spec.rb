@@ -8,7 +8,7 @@ RSpec.describe Zadarma::Resources::SpeechRecognition do
 
   describe '#get' do
     it 'retrieves speech recognition results' do
-      stub_request(:get, /api.zadarma.com\/v1\/speech_recognition\//)
+      stub_request(:get, %r{api.zadarma.com/v1/speech_recognition/})
         .to_return(body: { status: 'success' }.to_json)
 
       response = client.get_speech_recognition(call_id: '12345')
@@ -18,7 +18,7 @@ RSpec.describe Zadarma::Resources::SpeechRecognition do
 
   describe '#initiate' do
     it 'initiates speech recognition' do
-      stub_request(:put, /api.zadarma.com\/v1\/speech_recognition\//)
+      stub_request(:put, %r{api.zadarma.com/v1/speech_recognition/})
         .to_return(body: { status: 'success' }.to_json)
 
       response = client.initiate_speech_recognition(call_id: '12345')

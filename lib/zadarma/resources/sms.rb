@@ -2,6 +2,7 @@
 
 module Zadarma
   module Resources
+    # The Sms resource allows you to send SMS messages.
     class Sms
       def initialize(client:)
         @client = client

@@ -2,6 +2,7 @@
 
 module Zadarma
   module Resources
+    # The Sip resource allows you to manage your SIP numbers.
     class Sip
       def initialize(client:)
         @client = client

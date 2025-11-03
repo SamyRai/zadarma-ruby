@@ -2,6 +2,7 @@
 
 module Zadarma
   module Resources
+    # The DirectNumbers resource allows you to manage virtual numbers.
     class DirectNumbers
       def initialize(client:)
         @client = client
@@ -45,22 +46,16 @@ module Zadarma
       end
 
       # Order a virtual number
-      # @param direction_id [String] The direction/city ID
-      # @param number_id [String] The ID of the number to be connected
-      # @param documents_group_id [String] The ID of the group of user documents
-      # @param purpose [String] A text description of the purpose of number use
-      # @param receive_sms [String] '1' to enable SMS reception
-      # @param period [String] 'month' or '3month'
-      # @param autorenew_period [String] 'year' or 'month'
+      # @param params [Hash] The parameters for ordering a number
+      # @option params [String] :direction_id The direction/city ID
+      # @option params [String] :number_id The ID of the number to be connected
+      # @option params [String] :documents_group_id The ID of the group of user documents
+      # @option params [String] :purpose A text description of the purpose of number use
+      # @option params [String] :receive_sms '1' to enable SMS reception
+      # @option params [String] :period 'month' or '3month'
+      # @option params [String] :autorenew_period 'year' or 'month'
       # @return [Hash]
-      def order(direction_id:, number_id: nil, documents_group_id: nil, purpose: nil, receive_sms: nil, period: nil, autorenew_period: nil)
-        params = { direction_id: direction_id }
-        params[:number_id] = number_id if number_id
-        params[:documents_group_id] = documents_group_id if documents_group_id
-        params[:purpose] = purpose if purpose
-        params[:receive_sms] = receive_sms if receive_sms
-        params[:period] = period if period
-        params[:autorenew_period] = autorenew_period if autorenew_period
+      def order(params)
         @client.post('/v1/direct_numbers/order/', params)
       end
 

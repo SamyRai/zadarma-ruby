@@ -23,4 +23,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rubocop', '~> 1.0'
   s.add_development_dependency 'rubocop-rspec', '~> 2.0'
   s.add_development_dependency 'webmock', '~> 3.0'
+  s.add_development_dependency 'yard', '~> 0.9'
 end

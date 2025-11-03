@@ -2,7 +2,15 @@
 
 A modern, robust, and fully-featured Ruby client for the Zadarma API. This gem has been updated to support the latest Zadarma API, providing a clean and intuitive interface for all available endpoints.
 
-## Installation
+## Getting Started
+
+### Prerequisites
+
+- Ruby 2.7 or later
+- A Zadarma account
+- Your Zadarma API key and secret
+
+### Installation
 
 Add this line to your application's Gemfile:
 
@@ -18,7 +26,7 @@ Or install it yourself as:
 
     $ gem install zadarma
 
-## Usage
+## Configuration
 
 First, configure the client with your API key and secret. You can find these in your Zadarma personal account.
 
@@ -27,6 +35,8 @@ require 'zadarma'
 
 client = Zadarma::Client.new(api_key: 'YOUR_API_KEY', api_secret: 'YOUR_API_SECRET')
 ```
+
+## Usage
 
 Now you can call any of the available API methods:
 
@@ -92,7 +102,7 @@ This client is organized into resources, mirroring the Zadarma API structure.
     *   `statistics(start:, end_date:, sip: nil, cost_only: nil, type: nil, skip: nil, limit: nil)`: Get overall call statistics.
     *   `pbx_statistics(start:, end_date:, version: nil, skip: nil, limit: nil, call_type: nil)`: Get PBX call statistics.
 
-## Development & Testing
+## Development
 
 To work on this gem locally, clone the repository and then run `bundle install` to install the dependencies.
 
@@ -109,3 +119,15 @@ The test suite is configured to use `webmock` to stub out all API requests, so y
 3.  Commit your changes (`git commit -am 'Add some feature'`)
 4.  Push to the branch (`git push origin my-new-feature`)
 5.  Create a new Pull Request
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](https'://opensource.org/licenses/MIT).
+
+## Code of Conduct
+
+Everyone interacting in the Zadarma project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](CODE_OF_CONDUCT.md).
+
+## Version History
+
+*   **2.0.0** - The current version.

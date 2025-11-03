@@ -3,3 +3,5 @@ Gemfile.lock
 .DS_Store
 pkg
 vendor/bundle
+.yardoc
+doc

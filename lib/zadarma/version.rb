@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
 module Zadarma
-  class Error < StandardError
-  end
+  VERSION = '2.0.0'
 end

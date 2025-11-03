@@ -1,10 +1,14 @@
-# Zadarma API
+# Zadarma API Ruby Client
+
+A modern, robust, and fully-featured Ruby client for the Zadarma API. This gem has been updated to support the latest Zadarma API, providing a clean and intuitive interface for all available endpoints.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'zadarma'
+```ruby
+gem 'zadarma'
+```
 
 And then execute:
 
@@ -16,36 +20,92 @@ Or install it yourself as:
 
 ## Usage
 
-    Zadarma.api_key = "YOUR_API_KEY"
-    Zadarma.api_secret = "YOUR_API_SECRET"
-    Zadarma.log_requests = false # default
+First, configure the client with your API key and secret. You can find these in your Zadarma personal account.
 
-    Zadarma::Client.balance
-or
-    
-    client = Zadarma::Client.new("YOUR_API_KEY", "YOUR_API_SECRET")
-    client.balance
-    
-    
-## Available methods:
+```ruby
+require 'zadarma'
 
-* `balance` - user balance
-* `price(number)` - call price
-* `callback(from, to, params = {})` - request callback
-* `sip` - list user’s SIP-numbers
-* `set_sip_caller(id, number)` - change of CallerID
-* `redirection(params = {})` - get call forwarding status on SIP-numbers
-* `set_redirect(id, params)` - enable/disable sip forwarding
-* `pbx_internal` - list PBX internal numbers
-* `pbx_record(id, status, params = {})` - toggle call recording
-* `send_sms(number, message, params = {})` - send sms
-* `statistics(date_start, date_end, params = {})` - get stats
-* `pbx_statistics(date_start, date_end)` - get PBX stats
+client = Zadarma::Client.new(api_key: 'YOUR_API_KEY', api_secret: 'YOUR_API_SECRET')
+```
+
+Now you can call any of the available API methods:
+
+### Get Your Balance
+
+```ruby
+response = client.balance
+puts "Your balance is #{response['balance']} #{response['currency']}."
+```
+
+### Get Call Price
+
+```ruby
+response = client.price(number: '1234567890')
+puts "The price to call 1234567890 is #{response['info']['price']} per minute."
+```
+
+### Request a Callback
+
+```ruby
+response = client.callback(from: 'YOUR_NUMBER', to: 'DESTINATION_NUMBER')
+puts "Callback initiated from #{response['from']} to #{response['to']}."
+```
+
+### Send an SMS
+
+```ruby
+response = client.send_sms(number: 'DESTINATION_NUMBER', message: 'Hello from Zadarma!')
+puts "SMS sent. Cost: #{response['cost']} #{response['currency']}."
+```
+
+### Get Call Statistics
+
+```ruby
+response = client.statistics(start: '2023-01-01', end_date: '2023-01-31')
+response['stats'].each do |call|
+  puts "Call from #{call['from']} to #{call['to']} on #{call['callstart']}."
+end
+```
+
+## Available Methods
+
+This client is organized into resources, mirroring the Zadarma API structure.
+
+*   **Info**
+    *   `balance`: Get your current account balance.
+    *   `price(number:, caller_id: nil)`: Get the price for a call to a specific number.
+*   **PBX**
+    *   `internal_numbers`: Get a list of your internal PBX numbers.
+    *   `set_call_recording(id:, status:, email: nil, speech_recognition: nil)`: Enable or disable call recording for a PBX extension.
+*   **Direct Numbers (Virtual Numbers)**
+    *   `direct_numbers`: Get a list of your virtual numbers.
+*   **Request**
+    *   `callback(from:, to:, sip: nil, predicted: nil)`: Initiate a callback between two numbers.
+*   **SIP**
+    *   `sips`: Get a list of your SIP numbers.
+    *   `set_sip_caller_id(id:, number:)`: Set the CallerID for a SIP number.
+    *   `redirection(id: nil)`: Get call forwarding information for a SIP number.
+    *   `set_redirection(id:, status:, type: nil, number: nil, condition: nil)`: Set call forwarding for a SIP number.
+*   **SMS**
+    *   `send_sms(number:, message:, sender: nil)`: Send an SMS message.
+*   **Statistics**
+    *   `statistics(start:, end_date:, sip: nil, cost_only: nil, type: nil, skip: nil, limit: nil)`: Get overall call statistics.
+    *   `pbx_statistics(start:, end_date:, version: nil, skip: nil, limit: nil, call_type: nil)`: Get PBX call statistics.
+
+## Development & Testing
+
+To work on this gem locally, clone the repository and then run `bundle install` to install the dependencies.
+
+This gem uses RSpec for testing. To run the test suite, simply run:
+
+    $ bundle exec rspec
+
+The test suite is configured to use `webmock` to stub out all API requests, so you can run the tests without needing a live Zadarma account or making real API calls.
 
 ## Contributing
 
-1. Fork it ( https://github.com/zhekanax/zadarma-ruby/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+1.  Fork it ( https://github.com/SamyRai/zadarma-ruby/fork )
+2.  Create your feature branch (`git checkout -b my-new-feature`)
+3.  Commit your changes (`git commit -am 'Add some feature'`)
+4.  Push to the branch (`git push origin my-new-feature`)
+5.  Create a new Pull Request

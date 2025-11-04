@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Zadarma
+module ZadarmaSdk
   module Resources
     # The Info resource provides access to user information, such as balance and call rates.
     class Info
@@ -11,7 +11,7 @@ module Zadarma
       # Get the user's balance
       # @return [Hash]
       def balance
-        @client.get('/v1/info/balance/')
+        @client.get('/info/balance/')
       end
 
       # Get the call rate for a given number
@@ -21,7 +21,7 @@ module Zadarma
       def price(number:, caller_id: nil)
         params = { number: number }
         params[:caller_id] = caller_id if caller_id
-        @client.get('/v1/info/price/', params)
+        @client.get('/info/price/', params)
       end
     end
   end

@@ -2,7 +2,7 @@
 
 require 'time'
 
-module Zadarma
+module ZadarmaSdk
   module Resources
     # The Statistics resource provides access to call statistics.
     class Statistics
@@ -21,7 +21,7 @@ module Zadarma
       # @option params [Integer] :limit The limit on the number of input lines
       # @return [Hash]
       def statistics(params)
-        response = @client.get('/v1/statistics/', params)
+        response = @client.get('/statistics/', params)
         response['stats']&.each do |stat|
           stat['callstart'] = Time.parse(stat['callstart']) if stat['callstart']
         end
@@ -38,7 +38,7 @@ module Zadarma
       # @option params [String] :call_type Call destination ('in' or 'out')
       # @return [Hash]
       def pbx_statistics(params)
-        response = @client.get('/v1/statistics/pbx/', params)
+        response = @client.get('/statistics/pbx/', params)
         response['stats']&.each do |stat|
           stat['callstart'] = Time.parse(stat['callstart']) if stat['callstart']
         end

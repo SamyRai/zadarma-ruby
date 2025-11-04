@@ -1,6 +1,6 @@
-# Zadarma API Ruby Client Documentation
+# Zadarma SDK Ruby Client Documentation
 
-Welcome to the developer documentation for the Zadarma API Ruby Client. This guide provides detailed information about every aspect of the gem, from installation and configuration to a complete reference of all available API methods.
+Welcome to the developer documentation for the Zadarma SDK Ruby Client. This guide provides detailed information about every aspect of the gem, from installation and configuration to a complete reference of all available API methods.
 
 ## Getting Started
 
@@ -9,7 +9,7 @@ Welcome to the developer documentation for the Zadarma API Ruby Client. This gui
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'zadarma'
+gem 'zadarma_sdk'
 ```
 
 And then execute:
@@ -18,16 +18,16 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install zadarma
+    $ gem install zadarma_sdk
 
 ### Configuration
 
 First, configure the client with your API key and secret. You can find these in your Zadarma personal account.
 
 ```ruby
-require 'zadarma'
+require 'zadarma_sdk'
 
-client = Zadarma::Client.new(api_key: 'YOUR_API_KEY', api_secret: 'YOUR_API_SECRET')
+client = ZadarmaSdk::Client.new(api_key: 'YOUR_API_KEY', api_secret: 'YOUR_API_SECRET')
 ```
 
 ## API Resources

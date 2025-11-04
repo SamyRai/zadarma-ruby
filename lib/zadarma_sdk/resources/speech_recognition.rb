@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Zadarma
+module ZadarmaSdk
   module Resources
     # The SpeechRecognition resource allows you to manage speech recognition.
     class SpeechRecognition
@@ -19,7 +19,7 @@ module Zadarma
         params[:lang] = lang if lang
         params[:return] = return_results if return_results
         params[:alternatives] = alternatives if alternatives
-        @client.get('/v1/speech_recognition/', params)
+        @client.get('/speech_recognition/', params)
       end
 
       # Initiate call recognition
@@ -29,7 +29,7 @@ module Zadarma
       def initiate(call_id:, lang: nil)
         params = { call_id: call_id }
         params[:lang] = lang if lang
-        @client.put('/v1/speech_recognition/', params)
+        @client.put('/speech_recognition/', params)
       end
     end
   end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Gem::Specification.new do |s|
-  s.name          = 'zadarma'
+  s.name          = 'zadarma_sdk'
   s.version       = '2.0.0'
   s.summary       = 'A modern, robust, and tested Ruby client for the Zadarma API'
   s.description   = 'A modern, robust, and fully-featured Ruby client for the Zadarma API.'

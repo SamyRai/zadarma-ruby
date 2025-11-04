@@ -19,7 +19,7 @@ require_relative 'resources/groups_of_documents'
 require_relative 'client/resources'
 require_relative 'client/http'
 
-module Zadarma
+module ZadarmaSdk
   # The Client class is the main entry point for interacting with the Zadarma API.
   class Client
     include Resources

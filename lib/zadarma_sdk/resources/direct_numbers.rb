@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Zadarma
+module ZadarmaSdk
   module Resources
     # The DirectNumbers resource allows you to manage virtual numbers.
     class DirectNumbers
@@ -11,7 +11,7 @@ module Zadarma
       # Get information about the user's virtual numbers
       # @return [Hash]
       def all
-        @client.get('/v1/direct_numbers/')
+        @client.get('/direct_numbers/')
       end
 
       # Get a list of countries where numbers can be ordered
@@ -20,7 +20,7 @@ module Zadarma
       def countries(language: nil)
         params = {}
         params[:language] = language if language
-        @client.get('/v1/direct_numbers/countries/', params)
+        @client.get('/direct_numbers/countries/', params)
       end
 
       # Get a list of destinations in a country where a number can be ordered
@@ -32,7 +32,7 @@ module Zadarma
         params = { country: country }
         params[:language] = language if language
         params[:direction_id] = direction_id if direction_id
-        @client.get('/v1/direct_numbers/country/', params)
+        @client.get('/direct_numbers/country/', params)
       end
 
       # Get a list of available numbers for a given direction
@@ -42,7 +42,7 @@ module Zadarma
       def available(direction_id:, mask: nil)
         params = {}
         params[:mask] = mask if mask
-        @client.get("/v1/direct_numbers/available/#{direction_id}/", params)
+        @client.get("/direct_numbers/available/#{direction_id}/", params)
       end
 
       # Order a virtual number
@@ -56,7 +56,7 @@ module Zadarma
       # @option params [String] :autorenew_period 'year' or 'month'
       # @return [Hash]
       def order(params)
-        @client.post('/v1/direct_numbers/order/', params)
+        @client.post('/direct_numbers/order/', params)
       end
 
       # Prepay the number for the specified number of months
@@ -64,7 +64,7 @@ module Zadarma
       # @param months [Integer] The number of months
       # @return [Hash]
       def prolong(number:, months:)
-        @client.post('/v1/direct_numbers/prolong/', number: number, months: months)
+        @client.post('/direct_numbers/prolong/', number: number, months: months)
       end
     end
   end

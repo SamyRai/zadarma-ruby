@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Zadarma
+module ZadarmaSdk
   module Resources
     # The Request resource allows you to initiate callbacks.
     class Request
@@ -18,7 +18,7 @@ module Zadarma
         params = { from: from, to: to }
         params[:sip] = sip if sip
         params[:predicted] = predicted if predicted
-        @client.get('/v1/request/callback/', params)
+        @client.get('/request/callback/', params)
       end
     end
   end

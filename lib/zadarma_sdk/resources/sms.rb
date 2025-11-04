@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Zadarma
+module ZadarmaSdk
   module Resources
     # The Sms resource allows you to send SMS messages.
     class Sms
@@ -16,7 +16,7 @@ module Zadarma
       def send_sms(number:, message:, sender: nil)
         params = { number: number, message: message }
         params[:sender] = sender if sender
-        @client.post('/v1/sms/send/', params)
+        @client.post('/sms/send/', params)
       end
     end
   end

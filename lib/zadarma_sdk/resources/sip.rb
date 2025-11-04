@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Zadarma
+module ZadarmaSdk
   module Resources
     # The Sip resource allows you to manage your SIP numbers.
     class Sip
@@ -11,7 +11,7 @@ module Zadarma
       # Get the list of user's SIP-numbers
       # @return [Hash]
       def all
-        @client.get('/v1/sip/')
+        @client.get('/sip/')
       end
 
       # Set the CallerID for a SIP number
@@ -19,7 +19,7 @@ module Zadarma
       # @param number [String] The new CallerID
       # @return [Hash]
       def set_caller_id(id:, number:)
-        @client.put('/v1/sip/callerid/', id: id, number: number)
+        @client.put('/sip/callerid/', id: id, number: number)
       end
 
       # Get call forwarding information for a SIP number
@@ -28,7 +28,7 @@ module Zadarma
       def redirection(id: nil)
         params = {}
         params[:id] = id if id
-        @client.get('/v1/sip/redirection/', params)
+        @client.get('/sip/redirection/', params)
       end
 
       # Set call forwarding for a SIP number
@@ -43,14 +43,14 @@ module Zadarma
         params[:type] = type if type
         params[:number] = number if number
         params[:condition] = condition if condition
-        @client.put('/v1/sip/redirection/', params)
+        @client.put('/sip/redirection/', params)
       end
 
       # Get the online status of a SIP number
       # @param sip [String] The SIP number
       # @return [Hash]
       def status(sip:)
-        @client.get("/v1/sip/#{sip}/status/")
+        @client.get("/sip/#{sip}/status/")
       end
 
       # Create a new SIP number
@@ -64,7 +64,7 @@ module Zadarma
         params[:password] = password if password
         params[:callerid] = callerid if callerid
         params[:redirect_to_phone] = redirect_to_phone if redirect_to_phone
-        @client.post('/v1/sip/create/', params)
+        @client.post('/sip/create/', params)
       end
 
       # Change the password for a SIP number
@@ -72,7 +72,7 @@ module Zadarma
       # @param value [String] The new password
       # @return [Hash]
       def password(sip:, value:)
-        @client.put("/v1/sip/#{sip}/password/", value: value)
+        @client.put("/sip/#{sip}/password/", value: value)
       end
     end
   end

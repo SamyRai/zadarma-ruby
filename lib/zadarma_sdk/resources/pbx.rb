@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Zadarma
+module ZadarmaSdk
   module Resources
     # The Pbx resource allows you to manage your Zadarma PBX.
     class Pbx
@@ -11,7 +11,7 @@ module Zadarma
       # Get the list of PBX internal numbers
       # @return [Hash]
       def internal
-        @client.get('/v1/pbx/internal/')
+        @client.get('/pbx/internal/')
       end
 
       # Set the call recording for a PBX extension
@@ -24,7 +24,7 @@ module Zadarma
         params = { id: id, status: status }
         params[:email] = email if email
         params[:speech_recognition] = speech_recognition if speech_recognition
-        @client.put('/v1/pbx/internal/recording/', params)
+        @client.put('/pbx/internal/recording/', params)
       end
 
       # Request a call recording file
@@ -37,7 +37,7 @@ module Zadarma
         params[:call_id] = call_id if call_id
         params[:pbx_call_id] = pbx_call_id if pbx_call_id
         params[:lifetime] = lifetime if lifetime
-        @client.get('/v1/pbx/record/request/', params)
+        @client.get('/pbx/record/request/', params)
       end
     end
   end
